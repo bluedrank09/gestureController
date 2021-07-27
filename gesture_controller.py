@@ -10,7 +10,7 @@ mp_hands = mp.solutions.hands
 
 def get_gesture():
     try :
-        with mp_hands.Hands(minimum_detection_confidence=0.8, minimum_tracking_confidence=0.8) as hands :
+        with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.8) as hands :
 
             log.info(f"Getting video image")
 
@@ -40,7 +40,13 @@ def get_gesture():
                     log.info(f"Detecting nothing")
                     break
                 
+                #Flipping the image and changing the colours.
                 image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
+                log.debug(f"Flipped image and changed the colours")
+
+                #Telling the compter that it can just use the reference image given.
+                image.flags.writeable = False
+                log.debug(f"Told the computer that it just has to use the original reference image")
 
                 log.debug(f"Showing video now")
 

@@ -44,9 +44,33 @@ def get_gesture():
                 image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
                 log.debug(f"Flipped image and changed the colours")
 
-                #Telling the compter that it can just use the reference image given.
+                #Telling the computer that it can just use the reference image given.
                 image.flags.writeable = False
                 log.debug(f"Told the computer that it just has to use the original reference image")
+
+                #Finding the hands in the frame.
+                log.info(f"Finding the hands in the frame")
+                results = hands.process(image)
+                log.info(f"Found hands in the frame")
+
+                #Telling the computer it can change the image given.
+                image.flags.writeable = True
+
+                if results.multi_hand_landmarks:
+                    for hand_found in results.multi_hand_landmarks:
+                        # log.debug(results.multi_hand_landmarks)
+                        # log.debug(f"Got first hand")
+                        # hand = results.multi_hand_landmarks[]
+                        # log.debug(f"Drawing hand landmarks and lines")
+                        # mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
+                        # hand_two = results.multi_hand_landmarks[1]
+                        # mp_drawing.draw_landmarks(image, hand_two, mp_hands.HAND_CONNECTIONS)
+                        mp_drawing.draw_landmarks(image, hand_found, mp_hands.HAND_CONNECTIONS)
+                else:
+                    log.info(f"Hand not found")
+
+                log.info(f"Finished drawing hand landmarks and lines")
+
 
                 log.debug(f"Showing video now")
 
@@ -67,7 +91,7 @@ def get_gesture():
 
 if __name__ == "__main__":
     try:
-        log.basicConfig(format='%(asctime)s, %(lineno)d, %(message)s', level=log.INFO)
+        log.basicConfig(format='%(asctime)s, %(lineno)d, %(message)s', level=log.DEBUG)
         log.info(f"Starting gesture_controller program")
         get_gesture()
 

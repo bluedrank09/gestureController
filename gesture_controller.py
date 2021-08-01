@@ -56,15 +56,26 @@ def get_gesture():
                 #Telling the computer it can change the image given.
                 image.flags.writeable = True
 
+                #creating two lists for the coordinates for the landmarks in each hand
+                coordinates_landmark_hand_one = []
+                coordinates_landmark_hand_two = []
+
                 if results.multi_hand_landmarks:
-                    for hand_found in results.multi_hand_landmarks:
-                        # log.debug(results.multi_hand_landmarks)
-                        # log.debug(f"Got first hand")
-                        # hand = results.multi_hand_landmarks[]
-                        # log.debug(f"Drawing hand landmarks and lines")
-                        # mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
-                        # hand_two = results.multi_hand_landmarks[1]
-                        # mp_drawing.draw_landmarks(image, hand_two, mp_hands.HAND_CONNECTIONS)
+                    #processing hands detected 
+                    for index, hand_found in enumerate(results.multi_hand_landmarks):
+                        image_height, image_width, image_channel = image.shape
+
+                        #Getting normalized coordinates and getting real coordinates for each hand
+                        for id, landmark in enumerate(hand_found.landmark):
+                            x_position, y_postition = int(landmark.x * image_width), int(landmark.x * image_height)
+
+                            #Appending to each hand
+                            if index == 0:
+                                coordinates_landmark_hand_one.append([id, x_position, y_postition])
+                            else:
+                                coordinates_landmark_hand_two.append([id, x_position, y_postition])
+
+                        #Drawing landmarks
                         mp_drawing.draw_landmarks(image, hand_found, mp_hands.HAND_CONNECTIONS)
                 else:
                     log.info(f"Hand not found")

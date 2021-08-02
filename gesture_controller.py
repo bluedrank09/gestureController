@@ -4,6 +4,7 @@ import logging as log
 import sys
 import inspect
 import mediapipe as mp
+import math
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -49,9 +50,9 @@ def get_gesture():
                 log.debug(f"Told the computer that it just has to use the original reference image")
 
                 #Finding the hands in the frame.
-                log.info(f"Finding the hands in the frame")
+                log.debug(f"Finding the hands in the frame")
                 results = hands.process(image)
-                log.info(f"Found hands in the frame")
+                log.debug(f"Found hands in the frame")
 
                 #Telling the computer it can change the image given.
                 image.flags.writeable = True
@@ -70,17 +71,31 @@ def get_gesture():
                             x_position, y_postition = int(landmark.x * image_width), int(landmark.x * image_height)
 
                             #Appending to each hand
+                            log.debug(f"The index is {index}")
+
                             if index == 0:
                                 coordinates_landmark_hand_one.append([id, x_position, y_postition])
+                                log.debug(f"Appended to list one")
                             else:
                                 coordinates_landmark_hand_two.append([id, x_position, y_postition])
+                                log.debug(f"Appeneded to list two")
 
                         #Drawing landmarks
                         mp_drawing.draw_landmarks(image, hand_found, mp_hands.HAND_CONNECTIONS)
-                else:
-                    log.info(f"Hand not found")
 
-                log.info(f"Finished drawing hand landmarks and lines")
+                        log.debug(f"Length of coordinates list one is {len(coordinates_landmark_hand_one)}")
+                        log.debug(f"Length of coordinates list two is {len(coordinates_landmark_hand_two)}")
+
+                        if len(coordinates_landmark_hand_one) != 0 and len(coordinates_landmark_hand_two) != 0:
+                            log.debug(f"Calculating coordinates distaces between the two hands")
+                            log.debug(f"The distance between the coords is {math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8])}")
+                            if math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8]) < 150:
+                                log.info("This is an A")
+
+                else:
+                    log.debug(f"Hand not found")
+
+                log.debug(f"Finished drawing hand landmarks and lines")
 
 
                 log.debug(f"Showing video now")
@@ -102,7 +117,7 @@ def get_gesture():
 
 if __name__ == "__main__":
     try:
-        log.basicConfig(format='%(asctime)s, %(lineno)d, %(message)s', level=log.DEBUG)
+        log.basicConfig(format='%(asctime)s, %(lineno)d, %(message)s', level=log.INFO)
         log.info(f"Starting gesture_controller program")
         get_gesture()
 

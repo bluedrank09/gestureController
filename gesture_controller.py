@@ -89,8 +89,11 @@ def get_gesture():
                         if len(coordinates_landmark_hand_one) != 0 and len(coordinates_landmark_hand_two) != 0:
                             log.debug(f"Calculating coordinates distaces between the two hands")
                             log.debug(f"The distance between the coords is {math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8])}")
-                            if math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8]) < 150:
+                            if math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8]) in range(0, 10):
                                 log.info("This is an A")
+
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[8]) in range(0, 10):
+                                log.info(f"This is an E")
 
                 else:
                     log.debug(f"Hand not found")

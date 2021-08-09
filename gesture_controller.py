@@ -5,6 +5,7 @@ import sys
 import inspect
 import mediapipe as mp
 import math
+import PySimpleGUI as psg
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -92,6 +93,9 @@ def get_gesture():
 
                             if math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8]) in range(0, 10):
                                 log.info("This is an A")
+                                message_window = my_window()
+                                message_window['Letter'].update("A")
+                                event, values = message_window.read()
 
                             if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[8]) in range(0, 10):
                                 log.info(f"This is an E")
@@ -119,6 +123,20 @@ def get_gesture():
                     cv2.destroyAllWindows()
                     log.info(f'Destroyed all windows')
                     
+    except Exception as error:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        log.info(f"{inspect.stack()[0][3]} : {exc_tb.tb_lineno} : {error}")
+        raise(error)
+
+def my_window():
+    try:
+        layout = [
+            [psg.Text(f"The letter is "), psg.Text(key = 'Letter', size = (4,1))],
+            [psg.Text('Yes or No?')],
+            [psg.Button("Y"), psg.Button("N")]
+        ]
+        return psg.Window("Yes or No", layout).Finalize()
+
     except Exception as error:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         log.info(f"{inspect.stack()[0][3]} : {exc_tb.tb_lineno} : {error}")

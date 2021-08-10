@@ -91,20 +91,20 @@ def get_gesture():
                             log.debug(f"Calculating coordinates distaces between the two hands")
                             log.debug(f"The distance between the coords is {math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8])}")
 
-                            if math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8]) in range(0, 10):
-                                log.info("This is an A")
-                                message_window = my_window()
-                                message_window['Letter'].update("A")
-                                event, values = message_window.read()
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[4]) in range(0, 20):
+                                log.info("A")
 
                             if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[8]) in range(0, 10):
-                                log.info(f"This is an E")
+                                log.info(f"E")
 
-                            if math.dist(coordinates_landmark_hand_one[12], coordinates_landmark_hand_two[8]) in range(0, 10):
-                                log.info(f"This is an I")
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[12]) in range(0, 10):
+                                log.info(f"I")
 
-                            if math.dist(coordinates_landmark_hand_one[16], coordinates_landmark_hand_two[8]) in range(0, 10):
-                                log.info(f"This is an O")
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[16]) in range(0, 10):
+                                log.info(f"O")
+
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[20]) in range(0,10):
+                                log.info(f"U")
 
                 else:
                     log.debug(f"Hand not found")
@@ -127,15 +127,6 @@ def get_gesture():
         exc_type, exc_obj, exc_tb = sys.exc_info()
         log.info(f"{inspect.stack()[0][3]} : {exc_tb.tb_lineno} : {error}")
         raise(error)
-
-def my_window():
-    try:
-        layout = [
-            [psg.Text(f"The letter is "), psg.Text(key = 'Letter', size = (4,1))],
-            [psg.Text('Yes or No?')],
-            [psg.Button("Y"), psg.Button("N")]
-        ]
-        return psg.Window("Yes or No", layout).Finalize()
 
     except Exception as error:
         exc_type, exc_obj, exc_tb = sys.exc_info()

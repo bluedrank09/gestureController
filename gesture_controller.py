@@ -106,6 +106,9 @@ def get_gesture():
                             if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[20]) in range(0,10):
                                 log.info(f"U")
 
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[8]) in range (0,10) and math.dist(coordinates_landmark_hand_one[5], coordinates_landmark_hand_two[4]) in range (0,10):
+                                log.info(f"D")
+
                 else:
                     log.debug(f"Hand not found")
 

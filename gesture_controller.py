@@ -91,23 +91,20 @@ def get_gesture():
                             log.debug(f"Calculating coordinates distaces between the two hands")
                             log.debug(f"The distance between the coords is {math.dist(coordinates_landmark_hand_one[4], coordinates_landmark_hand_two[8])}")
 
-                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[4]) in range(0, 20):
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[4]) in range(0, 60):
                                 log.info("A")
 
                             if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[8]) in range(0, 10):
                                 log.info(f"E")
 
-                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[12]) in range(0, 10):
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[12]) in range(0, 60):
                                 log.info(f"I")
 
-                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[16]) in range(0, 10):
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[16]) in range(0, 80):
                                 log.info(f"O")
 
-                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[20]) in range(0,10):
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[20]) in range(0, 10):
                                 log.info(f"U")
-
-                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[8]) in range (0,10) and math.dist(coordinates_landmark_hand_one[5], coordinates_landmark_hand_two[4]) in range (0,10):
-                                log.info(f"D")
 
                 else:
                     log.debug(f"Hand not found")

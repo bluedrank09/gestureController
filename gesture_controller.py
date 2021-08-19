@@ -103,7 +103,7 @@ def get_gesture():
                             if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[16]) in range(0, 80):
                                 log.info(f"O")
 
-                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[20]) in range(0, 10):
+                            if math.dist(coordinates_landmark_hand_one[8], coordinates_landmark_hand_two[20]) in range(0, 30):
                                 log.info(f"U")
 
                 else:
